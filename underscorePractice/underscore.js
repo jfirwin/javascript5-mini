@@ -60,10 +60,14 @@ var customers = [{
     "bitcoin_address": "1ErLV7m1ARgf9Y1mbWWqnEiFtZnDyrjzUP"
   }]
 
-// Create and array of all email addresses
+// Create an array of all email addresses
 // first without using underscore's pluck, then with it.
 
+    var emails_map = customers.map((customer) =>{
+      return customer.email;
+    });
 
+    var emails_pluck = _.pluck(customers, 'email');
 
 
 
@@ -71,14 +75,21 @@ var inviteList1 = ['Ed', 'Fanny', 'Mildred', 'Alice', 'James'];
 var inviteList2 = ['Jake', 'Mildred', 'Jimmy', 'Ed', 'Franklin']
 
 
-  // Uh oh! We are having a party and two invite lists were created. 
+  // Uh oh! We are having a party and two invite lists were created.
   // Create one list of the people we want at the party (no duplicates).
   // Then remove all duplicates using _.union().
 
+      var inviteList_map = [];
+      inviteList1.map((name) =>{
+        inviteList_map.push(name);
+      })
+      inviteList2.map((name) =>{
+        if (inviteList_map.indexOf(name) === -1) {
+          inviteList_map.push(name);
+        }
+      })
 
-
-
-
+      var inviteList_union = _.union(inviteList1,inviteList2);
 
 
   var friendsOfJim = ['Tom', 'Carina','Rex', 'Jane', 'Greg', 'Nancy', 'Alison', 'Goose'];
@@ -86,7 +97,14 @@ var inviteList2 = ['Jake', 'Mildred', 'Jimmy', 'Ed', 'Franklin']
 
 
   // Jim and Betty are having a party, but they only want to invite mutual friends. Create and array of mutual friends. First without using underscore, then using underscores _.intersection().
+    var mutualFriends_map = [];
+    friendsOfJim.map((friend, i) => {
+      if(friendsOfBetty.indexOf(friend) !== -1) {
+        mutualFriends_map.push(friend);
+      }
+    });
 
+    var mutualFriends_intersection = _.intersection(friendsOfJim, friendsOfBetty);
 
 var purchases = [{
     company: 'Dunder Mifflin', order: 1000
@@ -109,7 +127,17 @@ var purchases = [{
 
 // First, group the purchases by company without underscore
 // then do it again using _.groupBy()
+    var grouped_map = {};
 
+    purchases.map((purchaseOrder) => {
+      let company = purchaseOrder.company;
+      if(grouped_map[company]) {
+        grouped_map[company].push(purchaseOrder);
+        } else {
+          grouped_map[company] = [];
+          grouped_map[company].push(purchaseOrder);
+        }
+      }
+    )
 
-
-
+    var grouped_groupBy = _.groupBy(purchases, 'company')
